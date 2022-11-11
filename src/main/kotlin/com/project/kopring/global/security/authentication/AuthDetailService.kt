@@ -14,5 +14,5 @@ class AuthDetailService(
 
     override fun loadUserByUsername(username: String?): UserDetails =
         AuthDetails(userRepository.findByEmail(username)
-                ?: throw UserNotFoundException(ErrorCode.NOT_FOUND_USER))
+                ?: throw UserNotFoundException(ErrorCode.USER_NOT_FOUND))
 }
