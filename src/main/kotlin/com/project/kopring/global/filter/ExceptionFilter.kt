@@ -1,4 +1,4 @@
-package com.project.kopring.global.security.filter
+package com.project.kopring.global.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.project.kopring.domain.user.exception.UserNotFoundException
@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class ExceptionHandlerFilter(
+class ExceptionFilter(
         private val objectMapper: ObjectMapper
 ): OncePerRequestFilter() {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-
-        try {
+        runCatching {
             filterChain.doFilter(request, response)
-        } catch (e: ExpiredJwtException) {
-            setErrorResponse(ErrorCode.EXPIRATION_TOKEN, response)
-        } catch (e: JwtException) {
-            setErrorResponse(ErrorCode.INVALID_TOKEN, response)
-        } catch (e: UserNotFoundException) {
-            setErrorResponse(ErrorCode.USER_NOT_FOUND, response)
+        }.onFailure { throwable ->
+            when (throwable) {
+                is ExpiredJwtException -> setErrorResponse(ErrorCode.EXPIRATION_TOKEN, response)
+                is JwtException -> setErrorResponse(ErrorCode.INVALID_TOKEN, response)
+                is UserNotFoundException -> setErrorResponse(ErrorCode.USER_NOT_FOUND, response)
+                else -> setErrorResponse(ErrorCode.INTERVAL_SERVER_ERROR, response)
+            }
         }
     }
 
