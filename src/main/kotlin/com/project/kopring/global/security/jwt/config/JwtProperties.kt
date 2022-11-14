@@ -1,4 +1,4 @@
-package com.project.kopring.global.security.jwt.properties
+package com.project.kopring.global.security.jwt.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
