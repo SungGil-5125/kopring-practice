@@ -5,10 +5,10 @@ import javax.persistence.*
 
 @Entity
 class User(
-        var email: String,
-        var password: String,
-        var name: String,
-        val refreshToken: String? = null,
+        val email: String,
+        val password: String,
+        val name: String,
+        var refreshToken: String?,
         @Enumerated(EnumType.STRING)
         @ElementCollection
         @CollectionTable(name = "role", joinColumns = [JoinColumn(name = "userId")])
@@ -17,4 +17,8 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val userId: Long = 0
+
+    fun updateRefreshToken(refreshToken: String) {
+        this.refreshToken = refreshToken
+    }
 }
