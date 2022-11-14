@@ -3,16 +3,18 @@ package com.project.kopring.domain.user.presentation.dto.request
 import com.project.kopring.domain.user.entity.User
 import com.project.kopring.domain.user.type.Role
 import java.util.Collections
+import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
 data class SignUpRequest(
-        @NotBlank(message = "아이디를 입력해주세요")
+        @field:NotBlank
+        @field:Email
         val email: String,
 
-        @NotBlank(message = "비밀번호를 입력해주세요")
+        @field:NotBlank
         val password: String,
 
-        @NotBlank(message = "이름을 입력해주세요")
+        @field:NotBlank
         val name: String
 ) {
 

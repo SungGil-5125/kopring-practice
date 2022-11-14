@@ -23,19 +23,19 @@ class AuthController(
 ) {
 
     @PostMapping("/signUp")
-    fun signUp(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<Void> {
+    fun signUp(@RequestBody @Valid signUpRequest: SignUpRequest): ResponseEntity<Void> {
         signUpService.signUp(signUpRequest)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     @PostMapping("/signIn")
-    fun signIn(@Valid @RequestBody signInRequest: SignInRequest): ResponseEntity<SignInResponse> {
+    fun signIn(@RequestBody @Valid signInRequest: SignInRequest): ResponseEntity<SignInResponse> {
         val response = signInService.signIn(signInRequest)
         return ResponseEntity.ok(response)
     }
 
     @PatchMapping("reissue")
-    fun reissueToken(@Valid @RequestBody reissueTokenRequest: ReissueTokenRequest): ResponseEntity<NewTokenResponse> {
+    fun reissueToken(@RequestBody @Valid reissueTokenRequest: ReissueTokenRequest): ResponseEntity<NewTokenResponse> {
         val response = reissueService.reissueToken(reissueTokenRequest)
         return ResponseEntity.ok(response)
     }

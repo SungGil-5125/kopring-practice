@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 data class PostRequest(
-        @NotBlank(message = "제목이 입력되지 않았습니다")
+        @field:NotBlank
         val title: String,
-        @NotBlank(message = "주제가 입력되지 않았습니다")
+        @field:NotBlank
         val content: String,
-        @NotNull(message = "태그가 입력되지 않았습니다")
+        @field:NotBlank
         val tags: MutableList<String>
 ) {
     fun toEntity(user: User): Post = Post(title, content, createdDate = LocalDateTime.now(), user, tags)
