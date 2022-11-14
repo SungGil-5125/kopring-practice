@@ -4,6 +4,7 @@ import com.project.kopring.domain.post.entity.Post
 import com.project.kopring.domain.post.exception.PostNotFoundException
 import com.project.kopring.domain.post.presentation.dto.request.PostRequest
 import com.project.kopring.domain.post.presentation.dto.request.UpdatePostRequest
+import com.project.kopring.domain.post.presentation.dto.request.toEntity
 import com.project.kopring.domain.post.presentation.dto.response.PostListResponse
 import com.project.kopring.domain.post.presentation.dto.response.PostResponse
 import com.project.kopring.domain.post.repository.PostRepository
