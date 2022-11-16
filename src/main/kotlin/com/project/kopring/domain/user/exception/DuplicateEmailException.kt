@@ -1,7 +1,6 @@
 package com.project.kopring.domain.user.exception
 
-import com.project.kopring.global.exception.ErrorCode
+import com.project.kopring.global.error.ErrorCode
+import com.project.kopring.global.error.exception.BasicException
 
-class DuplicateEmailException(
-        var errorCode: ErrorCode
-): RuntimeException(errorCode.message)
+class DuplicateEmailException: BasicException(ErrorCode.DUPLICATE_EMAIL)

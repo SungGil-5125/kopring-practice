@@ -1,4 +1,4 @@
-package com.project.kopring.global.exception
+package com.project.kopring.global.error.response
 
 class ErrorResponse(
         var status: Int,
