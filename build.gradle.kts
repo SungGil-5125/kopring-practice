@@ -23,20 +23,37 @@ repositories {
 }
 
 dependencies {
+
+	// jpa
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("mysql:mysql-connector-java")
+
+	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+	// web
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
+	// test
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+	testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+
+	// kotlin
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	// security
 	implementation("org.springframework.boot:spring-boot-starter-security")
+
+	// jwt
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-	implementation("io.github.microutils:kotlin-logging-jvm:3.0.3")
+
+	// redis
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }
 
