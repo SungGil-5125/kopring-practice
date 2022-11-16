@@ -31,6 +31,10 @@ class AuthController(
     @PostMapping("/signin")
     fun signIn(@RequestBody @Valid signInRequest: SignInRequest): ResponseEntity<SignInResponse> {
         val response = signInService.signIn(signInRequest)
+
+        println(signInRequest.email)
+        println(signInRequest.password)
+
         return ResponseEntity.ok(response)
     }
 

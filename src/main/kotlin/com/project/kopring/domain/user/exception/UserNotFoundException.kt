@@ -1,7 +1,6 @@
 package com.project.kopring.domain.user.exception
 
-import com.project.kopring.global.exception.ErrorCode
+import com.project.kopring.global.error.ErrorCode
+import com.project.kopring.global.error.exception.BasicException
 
-class UserNotFoundException(
-        var errorCode: ErrorCode
-): RuntimeException(errorCode.message)
+class UserNotFoundException: BasicException(ErrorCode.USER_NOT_FOUND)
