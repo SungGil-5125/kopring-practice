@@ -1,7 +1,6 @@
 package com.project.kopring.domain.user.exception
 
-import com.project.kopring.global.exception.ErrorCode
+import com.project.kopring.global.error.ErrorCode
+import com.project.kopring.global.error.exception.BasicException
 
-class RefreshTokenExpiredException(
-        val errorCode: ErrorCode
-): RuntimeException(errorCode.message)
+class RefreshTokenExpiredException: BasicException(ErrorCode.REFRESH_TOKEN_EXPIRED)
