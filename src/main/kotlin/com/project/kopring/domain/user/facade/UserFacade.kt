@@ -4,6 +4,7 @@ import com.project.kopring.domain.user.entity.User
 import com.project.kopring.domain.user.exception.PasswordNotCorrectException
 import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.presentation.dto.request.SignUpRequest
+import com.project.kopring.domain.user.presentation.dto.request.toEntity
 import com.project.kopring.domain.user.repository.UserRepository
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder

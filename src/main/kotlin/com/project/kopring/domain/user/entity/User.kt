@@ -16,7 +16,7 @@ class User(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userId: Long = 0
+    val userId: Long = 0L
 
     fun updateRefreshToken(refreshToken: String) {
         this.refreshToken = refreshToken

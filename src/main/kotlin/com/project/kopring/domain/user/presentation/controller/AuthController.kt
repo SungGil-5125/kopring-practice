@@ -1,6 +1,5 @@
 package com.project.kopring.domain.user.presentation.controller
 
-import com.project.kopring.domain.user.presentation.dto.*
 import com.project.kopring.domain.user.presentation.dto.request.ReissueTokenRequest
 import com.project.kopring.domain.user.presentation.dto.request.SignInRequest
 import com.project.kopring.domain.user.presentation.dto.request.SignUpRequest
@@ -23,25 +22,19 @@ class AuthController(
 ) {
 
     @PostMapping("/signup")
-    fun signUp(@RequestBody @Valid signUpRequest: SignUpRequest): ResponseEntity<Void> {
-        signUpService.signUp(signUpRequest)
+    fun signUp(@RequestBody request: SignUpRequest): ResponseEntity<Void> {
+        signUpService.signUp(request)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     @PostMapping("/signin")
-    fun signIn(@RequestBody @Valid signInRequest: SignInRequest): ResponseEntity<SignInResponse> {
-        val response = signInService.signIn(signInRequest)
-
-        println(signInRequest.email)
-        println(signInRequest.password)
-
-        return ResponseEntity.ok(response)
+    fun signIn(@RequestBody request: SignInRequest): ResponseEntity<SignInResponse> {
+        return ResponseEntity.ok(signInService.signIn(request))
     }
 
     @PatchMapping("reissue")
-    fun reissueToken(@RequestBody @Valid reissueTokenRequest: ReissueTokenRequest): ResponseEntity<NewTokenResponse> {
-        val response = reissueService.reissueToken(reissueTokenRequest)
-        return ResponseEntity.ok(response)
+    fun reissueToken(@RequestBody request: ReissueTokenRequest): ResponseEntity<NewTokenResponse> {
+        return ResponseEntity.ok(reissueService.reissueToken(request))
     }
 
 }

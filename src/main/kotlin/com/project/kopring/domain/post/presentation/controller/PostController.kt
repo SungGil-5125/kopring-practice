@@ -7,6 +7,7 @@ import com.project.kopring.domain.post.presentation.dto.response.PostResponse
 import com.project.kopring.domain.post.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -17,13 +18,14 @@ class PostController(
 ) {
 
     @PostMapping
-    fun writePost(@RequestBody @Valid request: PostRequest): ResponseEntity<Void> {
+    fun writePost(@RequestBody request: PostRequest): ResponseEntity<Void> {
+        print(request.title)
         postService.writePost(request)
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     @DeleteMapping("{postId}")
-    fun deletePost(@PathVariable @Valid postId: Long): ResponseEntity<Void> {
+    fun deletePost(@PathVariable postId: Long): ResponseEntity<Void> {
         postService.deletePost(postId)
         return ResponseEntity.ok().build()
     }

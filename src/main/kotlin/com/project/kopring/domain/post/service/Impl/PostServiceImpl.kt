@@ -9,20 +9,20 @@ import com.project.kopring.domain.post.presentation.dto.response.PostListRespons
 import com.project.kopring.domain.post.presentation.dto.response.PostResponse
 import com.project.kopring.domain.post.repository.PostRepository
 import com.project.kopring.domain.post.service.PostService
-import com.project.kopring.domain.user.util.UserUtil
-import com.project.kopring.global.exception.ErrorCode
+import com.project.kopring.domain.user.facade.UserFacade
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PostServiceImpl(
         private val postRepository: PostRepository,
-        private val userUtil: UserUtil
+        private val userFacade: UserFacade
 ): PostService {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun writePost(postRequest: PostRequest) {
-        postRepository.save(postRequest.toEntity(userUtil.currentUser()))
+        print(postRequest.title)
+        postRepository.save(postRequest.toEntity(userFacade.currentUser()))
     }
 
     @Transactional(rollbackFor = [Exception::class])
@@ -51,6 +51,6 @@ class PostServiceImpl(
     }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findPostById(postId: Long): Post = postRepository.findById(postId).orElseThrow{ throw PostNotFoundException(ErrorCode.POST_NOT_FOUND) }
+    override fun findPostById(postId: Long): Post = postRepository.findById(postId).orElseThrow{ throw PostNotFoundException() }
 
 }

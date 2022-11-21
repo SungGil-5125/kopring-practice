@@ -25,7 +25,7 @@ class ExceptionFilter(
                 is ExpiredJwtException -> setErrorResponse(ErrorCode.EXPIRATION_TOKEN, response)
                 is JwtException -> setErrorResponse(ErrorCode.INVALID_TOKEN, response)
                 is UserNotFoundException -> setErrorResponse(ErrorCode.USER_NOT_FOUND, response)
-                else -> setErrorResponse(ErrorCode.INTERVAL_SERVER_ERROR, response)
+//                else -> setErrorResponse(ErrorCode.INTERVAL_SERVER_ERROR, response)
             }
         }
     }
