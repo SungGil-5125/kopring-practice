@@ -2,7 +2,7 @@ package com.project.kopring.global.security.authentication
 
 import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.facade.UserFacade
-import com.project.kopring.domain.user.repository.UserRepository
+import com.project.kopring.domain.user.domain.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

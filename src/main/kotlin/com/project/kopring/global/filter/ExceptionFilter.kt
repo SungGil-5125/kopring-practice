@@ -2,7 +2,7 @@ package com.project.kopring.global.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.project.kopring.domain.user.exception.UserNotFoundException
-import com.project.kopring.global.error.ErrorCode
+import com.project.kopring.global.error.type.ErrorCode
 import com.project.kopring.global.error.response.ErrorResponse
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException

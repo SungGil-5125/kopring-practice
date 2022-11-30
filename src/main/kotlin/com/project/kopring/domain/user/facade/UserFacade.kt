@@ -1,11 +1,11 @@
 package com.project.kopring.domain.user.facade
 
-import com.project.kopring.domain.user.entity.User
+import com.project.kopring.domain.user.domain.User
 import com.project.kopring.domain.user.exception.PasswordNotCorrectException
 import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.presentation.dto.request.SignUpRequest
 import com.project.kopring.domain.user.presentation.dto.request.toEntity
-import com.project.kopring.domain.user.repository.UserRepository
+import com.project.kopring.domain.user.domain.repository.UserRepository
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -19,10 +19,6 @@ class UserFacade(
     fun findUserByEmail(email: String): User =
             userRepository.findByEmail(email)
                     ?: throw UserNotFoundException()
-
-    fun findUserById(userId: Long): User =
-            userRepository.findById(userId)
-                    .orElseThrow() { throw UserNotFoundException() }
 
     fun existsByEmail(email: String): Boolean =
             userRepository.existsByEmail(email)

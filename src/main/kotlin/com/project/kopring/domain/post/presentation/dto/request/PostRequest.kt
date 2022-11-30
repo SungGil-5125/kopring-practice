@@ -1,7 +1,7 @@
 package com.project.kopring.domain.post.presentation.dto.request
 
-import com.project.kopring.domain.post.entity.Post
-import com.project.kopring.domain.user.entity.User
+import com.project.kopring.domain.post.domain.Post
+import com.project.kopring.domain.user.domain.User
 import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 

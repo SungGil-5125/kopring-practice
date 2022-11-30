@@ -1,6 +1,6 @@
 package com.project.kopring.domain.user.service.Impl
 
-import com.project.kopring.domain.user.entity.User
+import com.project.kopring.domain.user.domain.User
 import com.project.kopring.domain.user.exception.InvalidTokenException
 import com.project.kopring.domain.user.exception.RefreshTokenExpiredException
 import com.project.kopring.domain.user.facade.UserFacade

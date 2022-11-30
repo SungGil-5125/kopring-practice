@@ -1,6 +1,6 @@
 package com.project.kopring.domain.user.presentation.dto.request
 
-import com.project.kopring.domain.user.entity.User
+import com.project.kopring.domain.user.domain.User
 import com.project.kopring.domain.user.type.Role
 import java.util.*
 import javax.validation.constraints.Email

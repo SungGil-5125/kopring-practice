@@ -1,4 +1,4 @@
-package com.project.kopring.global.error
+package com.project.kopring.global.error.type
 
 enum class ErrorCode(
         val message: String,

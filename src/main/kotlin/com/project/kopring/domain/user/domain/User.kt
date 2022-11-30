@@ -1,4 +1,4 @@
-package com.project.kopring.domain.user.entity
+package com.project.kopring.domain.user.domain
 
 import com.project.kopring.domain.user.type.Role
 import javax.persistence.*
@@ -16,6 +16,7 @@ class User(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     val userId: Long = 0L
 
     fun updateRefreshToken(refreshToken: String) {

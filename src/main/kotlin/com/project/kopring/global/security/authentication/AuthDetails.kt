@@ -1,6 +1,6 @@
 package com.project.kopring.global.security.authentication
 
-import com.project.kopring.domain.user.entity.User
+import com.project.kopring.domain.user.domain.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 

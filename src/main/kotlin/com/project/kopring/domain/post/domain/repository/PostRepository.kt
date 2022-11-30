@@ -1,6 +1,6 @@
-package com.project.kopring.domain.post.repository
+package com.project.kopring.domain.post.domain.repository
 
-import com.project.kopring.domain.post.entity.Post
+import com.project.kopring.domain.post.domain.Post
 import org.springframework.data.repository.CrudRepository
 
 interface PostRepository: CrudRepository<Post, Long> {
