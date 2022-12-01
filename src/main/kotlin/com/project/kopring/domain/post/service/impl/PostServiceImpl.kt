@@ -6,7 +6,7 @@ import com.project.kopring.domain.post.exception.PostNotFoundException
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.post.presentation.data.response.PostListResponse
 import com.project.kopring.domain.post.presentation.data.response.PostResponse
-import com.project.kopring.domain.post.presentation.type.PostValidatorType
+import com.project.kopring.domain.post.presentation.data.type.PostValidatorType
 import com.project.kopring.domain.post.service.PostService
 import com.project.kopring.domain.post.util.PostConverter
 import com.project.kopring.domain.post.util.PostValidator
