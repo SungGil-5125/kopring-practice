@@ -1,17 +1,17 @@
 package com.project.kopring.domain.post.service
 
-import com.project.kopring.domain.post.domain.Post
-import com.project.kopring.domain.post.presentation.dto.request.PostRequest
-import com.project.kopring.domain.post.presentation.dto.request.UpdatePostRequest
-import com.project.kopring.domain.post.presentation.dto.response.PostListResponse
-import com.project.kopring.domain.post.presentation.dto.response.PostResponse
+import com.project.kopring.domain.post.presentation.data.dto.PostDto
+import com.project.kopring.domain.post.presentation.data.request.PostRequest
+import com.project.kopring.domain.post.presentation.data.request.UpdatePostRequest
+import com.project.kopring.domain.post.presentation.data.response.PostListResponse
+import com.project.kopring.domain.post.presentation.data.response.PostResponse
 
 interface PostService {
 
-    fun writePost(postRequest: PostRequest)
-    fun deletePost(postId: Long)
-    fun updatePost(postId: Long, updatePostRequest: UpdatePostRequest)
-    fun findPostDetailById(postId: Long): PostResponse
+    fun writePost(postDto: PostDto)
+    fun deletePost(postDto: PostDto)
+    fun updatePost(postDto: PostDto)
+    fun findPostDetailById(postDto: PostDto): PostResponse
     fun findAllPost(): PostListResponse
 
 }

@@ -1,9 +1,9 @@
 package com.project.kopring.domain.post.presentation
 
-import com.project.kopring.domain.post.presentation.dto.request.PostRequest
-import com.project.kopring.domain.post.presentation.dto.request.UpdatePostRequest
-import com.project.kopring.domain.post.presentation.dto.response.PostListResponse
-import com.project.kopring.domain.post.presentation.dto.response.PostResponse
+import com.project.kopring.domain.post.presentation.data.request.PostRequest
+import com.project.kopring.domain.post.presentation.data.request.UpdatePostRequest
+import com.project.kopring.domain.post.presentation.data.response.PostListResponse
+import com.project.kopring.domain.post.presentation.data.response.PostResponse
 import com.project.kopring.domain.post.service.PostService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

@@ -1,7 +1,7 @@
 package com.project.kopring.domain.user.service
 
-import com.project.kopring.domain.user.presentation.dto.request.SignUpRequest
-import com.project.kopring.domain.user.repository.UserRepository
+import com.project.kopring.domain.user.presentation.data.request.SignUpRequest
+import com.project.kopring.domain.user.domain.repository.UserRepository
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

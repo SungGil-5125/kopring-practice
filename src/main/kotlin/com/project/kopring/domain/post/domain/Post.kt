@@ -1,33 +1,31 @@
 package com.project.kopring.domain.post.domain
 
+import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.user.domain.User
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.time.LocalDateTime
+import com.project.kopring.global.entity.BaseTimeEntity
 import javax.persistence.*
 
 @Entity
-@EntityListeners(AuditingEntityListener::class)
-class Post(
+open class Post(
         var title: String,
         var content: String,
-        @CreatedDate
-        val createdDate: LocalDateTime,
-        @ManyToOne
-        @JoinColumn(name = "user_id")
-        val user: User,
         @ElementCollection(fetch = FetchType.LAZY)
         @CollectionTable(name = "post_tags", joinColumns = [JoinColumn(name = "post_id")])
-        var tags: MutableList<String>
-) {
+        var tags: MutableList<String>,
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        val user: User
+): BaseTimeEntity() {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     val postId = 0L
 
-    fun updatePost(title: String, content: String, tags: MutableList<String>) {
-        this.title = title
-        this.content = content
-        this.tags = tags
+    fun updatePost(postDto: PostDto) {
+        this.title = postDto.title
+        this.content = postDto.description
+        this.tags = postDto.tags
     }
+
 }
