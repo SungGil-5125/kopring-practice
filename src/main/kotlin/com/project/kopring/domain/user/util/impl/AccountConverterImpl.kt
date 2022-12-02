@@ -24,8 +24,8 @@ class AccountConverterImpl: AccountConverter {
     override fun toDto(request: ReissueTokenRequest): ReissueTokenDto =
             ReissueTokenDto(request.refreshToken)
 
-    override fun toEntity(dto: UserDto): User =
-            User(dto.email, dto.password, dto.name, "", Collections.singletonList(Role.ROLE_USER))
+    override fun toEntity(dto: UserDto, encodePassword: String): User =
+            User(-1, dto.email, encodePassword, dto.name, "", Collections.singletonList(Role.ROLE_USER))
 
     override fun toResponse(dto: UserDto): UserInfoResponse =
             UserInfoResponse(dto.email, dto.password, dto.name)

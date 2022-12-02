@@ -11,6 +11,7 @@ class JwtTokenUtilImpl(
 ): JwtTokenUtil {
 
     override fun generateJwtToken(email: String): TokenResponse {
+        println(email)
         val accessToken = jwtTokenProvider.generateAccessToken(email)
         val refreshToken = jwtTokenProvider.generateRefreshToken(email)
         return TokenResponse(accessToken, refreshToken, jwtTokenProvider.getExpireAt())

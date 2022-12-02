@@ -13,7 +13,7 @@ interface AccountConverter {
     fun toDto(request: SignUpRequest): UserDto
     fun toDto(request: SignInRequest): UserDto
     fun toDto(request: ReissueTokenRequest): ReissueTokenDto
-    fun toEntity(dto: UserDto): User
+    fun toEntity(dto: UserDto, encodePassword: String): User
     fun toResponse(dto: UserDto): UserInfoResponse
 
 }

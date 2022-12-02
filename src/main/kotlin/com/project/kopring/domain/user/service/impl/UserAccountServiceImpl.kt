@@ -11,6 +11,7 @@ import com.project.kopring.domain.user.util.AccountConverter
 import com.project.kopring.domain.user.util.AccountValidator
 import com.project.kopring.domain.user.util.JwtTokenUtil
 import com.project.kopring.domain.user.util.UserUtil
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,21 +21,21 @@ class UserAccountServiceImpl(
         private val accountValidator: AccountValidator,
         private val userRepository: UserRepository,
         private val jwtTokenUtil: JwtTokenUtil,
-        private val userUtil: UserUtil
+        private val userUtil: UserUtil,
+        private val passwordEncoder: PasswordEncoder
 ): UserAccountService {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun signUp(userDto: UserDto) {
         accountValidator.validate(ValidatorType.SIGNUP, userDto)
-                .let { accountConverter.toEntity(userDto) }
+                .let { accountConverter.toEntity(userDto, passwordEncoder.encode(userDto.password)) }
                 .let { userRepository.save(it) }
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun signIn(userDto: UserDto): TokenResponse =
         accountValidator.validate(ValidatorType.SIGNIN, userDto)
-                .let { jwtTokenUtil.generateJwtToken(userDto.email) }
-
+            .let { jwtTokenUtil.generateJwtToken(userDto.email) }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun reissueToken(reissueTokenDto: ReissueTokenDto): TokenResponse {

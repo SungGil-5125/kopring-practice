@@ -34,8 +34,8 @@ class AccountValidatorImpl(
             it ?: throw UserNotFoundException()
         }.let {
             passwordEncoder.matches(password, it.password)
-        }.let { isMatch ->
-            if(isMatch) return
+        }.let {
+            if(it) return
             else throw PasswordNotCorrectException()
         }
     }
