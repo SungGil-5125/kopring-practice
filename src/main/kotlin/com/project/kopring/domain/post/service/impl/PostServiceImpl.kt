@@ -4,8 +4,7 @@ import com.project.kopring.domain.post.domain.Post
 import com.project.kopring.domain.post.domain.repository.PostRepository
 import com.project.kopring.domain.post.exception.PostNotFoundException
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
-import com.project.kopring.domain.post.presentation.data.response.PostListResponse
-import com.project.kopring.domain.post.presentation.data.response.PostResponse
+import com.project.kopring.domain.post.presentation.data.dto.PostQueryDto
 import com.project.kopring.domain.post.presentation.data.type.PostValidatorType
 import com.project.kopring.domain.post.service.PostService
 import com.project.kopring.domain.post.util.PostConverter
@@ -24,38 +23,36 @@ class PostServiceImpl(
 
     @Transactional(rollbackFor = [Exception::class])
     override fun writePost(postDto: PostDto) {
-        postValidator.validate(PostValidatorType.CREATE, postDto)
-                .let { postConverter.toEntity(postDto, userUtil.currentUser()) }
+        postConverter.toEntity(postDto, userUtil.currentUser())
                 .let { postRepository.save(it) }
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun deletePost(postDto: PostDto) {
         postValidator.validate(PostValidatorType.UPDATE, postDto)
-                .let { postRepository.deleteById(postDto.id) }
+                .let { postRepository.deleteById(it.postId) }
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun updatePost(postDto: PostDto) {
-        postValidator.validate(PostValidatorType.DELETE, postDto)
-                .let { postRepository.findById(postDto.id) }
+        postValidator.validate(PostValidatorType.UPDATE, postDto)
+            .updatePost(postDto)
     }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findPostDetailById(postDto: PostDto): PostResponse =
+    override fun findPostDetailById(postDto: PostDto): PostQueryDto =
             postRepository.findPostByPostId(postDto.id)
                     .let { it ?: throw PostNotFoundException() }
-                    .let { PostResponse(it, isPostMine(it)) }
+                    .let { postConverter.toQueryDto(it, isPostMine(it)) }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findAllPost(): PostListResponse {
-        return PostListResponse(postRepository.findAll().map { PostResponse(it, isPostMine(it)) })
+    override fun findAllPost(): List<PostQueryDto> {
+        return postRepository.findAll()
+            .map { postConverter.toQueryDto(it, isPostMine(it)) }
     }
 
     private fun isPostMine(post: Post): Boolean {
-        return post.user == userUtil.currentUser();
+        return post.user == userUtil.currentUser()
     }
-
-
 
 }

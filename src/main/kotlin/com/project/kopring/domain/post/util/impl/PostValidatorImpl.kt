@@ -13,9 +13,8 @@ class PostValidatorImpl(
         private val postRepository: PostRepository
 ): PostValidator {
 
-    override fun validate(validator: PostValidatorType, postDto: PostDto) {
-        when(validator){
-            PostValidatorType.CREATE -> postDto
+    override fun validate(validator: PostValidatorType, postDto: PostDto): Post {
+        return when(validator){
             PostValidatorType.UPDATE -> validatePost(postDto.id)
             PostValidatorType.DELETE -> validatePost(postDto.id)
         }

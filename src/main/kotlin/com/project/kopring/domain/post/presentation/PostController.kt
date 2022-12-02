@@ -2,9 +2,9 @@ package com.project.kopring.domain.post.presentation
 
 import com.project.kopring.domain.post.presentation.data.request.PostRequest
 import com.project.kopring.domain.post.presentation.data.request.UpdatePostRequest
-import com.project.kopring.domain.post.presentation.data.response.PostListResponse
 import com.project.kopring.domain.post.presentation.data.response.PostResponse
 import com.project.kopring.domain.post.service.PostService
+import com.project.kopring.domain.post.util.PostConverter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,35 +12,41 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("post")
 class PostController(
-        private val postService: PostService
+        private val postService: PostService,
+        private val postConverter: PostConverter
 ) {
 
     @PostMapping
-    fun writePost(@RequestBody request: PostRequest): ResponseEntity<Void> {
-        postService.writePost(request)
-        return ResponseEntity.status(HttpStatus.CREATED).build()
-    }
+    fun writePost(@RequestBody request: PostRequest): ResponseEntity<Void> =
+        postConverter.toDto(request)
+            .let { postService.writePost(it) }
+            .let { ResponseEntity.status(HttpStatus.CREATED).build() }
+
 
     @DeleteMapping("{postId}")
-    fun deletePost(@PathVariable postId: Long): ResponseEntity<Void> {
-        postService.deletePost(postId)
-        return ResponseEntity.ok().build()
-    }
+    fun deletePost(@PathVariable postId: Long): ResponseEntity<Void> =
+        postConverter.toDto(postId)
+            .let { postService.deletePost(it) }
+            .let { ResponseEntity.ok().build() }
 
-    @PatchMapping("{postId}")
-    fun updatePost(@PathVariable postId: Long, @RequestBody updatePostRequest: UpdatePostRequest): ResponseEntity<Void> {
-        postService.updatePost(postId, updatePostRequest)
-        return ResponseEntity.ok().build()
-    }
+    @PatchMapping("{id}")
+    fun updatePost(@PathVariable id: Long, @RequestBody updatePostRequest: UpdatePostRequest): ResponseEntity<Void> =
+        postConverter.toDto(id, updatePostRequest)
+            .let { postService.updatePost(it) }
+            .let { ResponseEntity.ok().build() }
 
     @GetMapping("{postId}")
-    fun findOneById(@PathVariable postId: Long): ResponseEntity<PostResponse> {
-        return ResponseEntity.ok(postService.findPostDetailById(postId));
-    }
+    fun findOneById(@PathVariable postId: Long): ResponseEntity<PostResponse> =
+        postConverter.toDto(postId)
+            .let { postService.findPostDetailById(it) }
+            .let { postConverter.toResponse(it) }
+            .let { ResponseEntity.ok(it) }
 
     @GetMapping
-    fun findAllPost(): ResponseEntity<PostListResponse> {
-        return ResponseEntity.ok(postService.findAllPost())
-    }
+    fun findAllPost(): ResponseEntity<List<PostResponse>> =
+        postService.findAllPost()
+            .map { postConverter.toResponse(it) }
+            .let { ResponseEntity.ok(it) }
+
 
 }
