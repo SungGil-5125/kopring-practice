@@ -13,8 +13,8 @@ class UserUtilImpl(
 ): UserUtil {
 
     override fun currentUser(): User {
-        val email = SecurityContextHolder.getContext().authentication.name
-        return userRepository.findByEmail(email)
+        val id = SecurityContextHolder.getContext().authentication.name
+        return userRepository.findByEmail(id)
                 ?: throw UserNotFoundException()
     }
 

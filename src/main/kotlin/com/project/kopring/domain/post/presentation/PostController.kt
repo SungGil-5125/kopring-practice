@@ -23,9 +23,9 @@ class PostController(
             .let { ResponseEntity.status(HttpStatus.CREATED).build() }
 
 
-    @DeleteMapping("{postId}")
-    fun deletePost(@PathVariable postId: Long): ResponseEntity<Void> =
-        postConverter.toDto(postId)
+    @DeleteMapping("{id}")
+    fun deletePost(@PathVariable id: Long): ResponseEntity<Void> =
+        postConverter.toDto(id)
             .let { postService.deletePost(it) }
             .let { ResponseEntity.ok().build() }
 
@@ -35,9 +35,9 @@ class PostController(
             .let { postService.updatePost(it) }
             .let { ResponseEntity.ok().build() }
 
-    @GetMapping("{postId}")
-    fun findOneById(@PathVariable postId: Long): ResponseEntity<PostResponse> =
-        postConverter.toDto(postId)
+    @GetMapping("{id}")
+    fun findOneById(@PathVariable id: Long): ResponseEntity<PostResponse> =
+        postConverter.toDto(id)
             .let { postService.findPostDetailById(it) }
             .let { postConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
@@ -48,5 +48,10 @@ class PostController(
             .map { postConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
 
+    @GetMapping("search")
+    fun findPostByKeyword(@RequestParam("keyword") keyword: String) =
+        postConverter.toDto(keyword)
+            .let { postService.findPostByKeyword(it) }
+            .let { ResponseEntity.ok(it) }
 
 }

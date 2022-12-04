@@ -21,7 +21,7 @@ class PostValidatorImpl(
     }
 
     private fun validatePost(id: Long): Post {
-        return postRepository.findPostByPostId(id)
+        return postRepository.findPostById(id)
                 ?: throw PostNotFoundException()
     }
 

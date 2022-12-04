@@ -4,5 +4,6 @@ import com.project.kopring.domain.post.domain.Post
 import org.springframework.data.repository.CrudRepository
 
 interface PostRepository: CrudRepository<Post, Long> {
-    fun findPostByPostId(postId: Long): Post?
+    fun findPostById(postId: Long): Post?
+    fun findPostByTitleContaining(title: String): List<Post>
 }

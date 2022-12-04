@@ -33,7 +33,8 @@ class SecurityConfig(
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+
         http
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
                 .addFilterBefore(exceptionFilter, JwtRequestFilter::class.java)

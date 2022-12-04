@@ -10,7 +10,7 @@ import com.project.kopring.domain.user.presentation.data.response.UserInfoRespon
 import com.project.kopring.domain.user.type.Role
 import com.project.kopring.domain.user.util.AccountConverter
 import org.springframework.stereotype.Component
-import java.util.Collections
+import java.util.*
 
 @Component
 class AccountConverterImpl: AccountConverter {

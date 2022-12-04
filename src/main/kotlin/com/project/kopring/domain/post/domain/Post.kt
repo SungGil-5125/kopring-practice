@@ -3,17 +3,21 @@ package com.project.kopring.domain.post.domain
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.user.domain.User
 import com.project.kopring.global.entity.BaseTimeEntity
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 class Post(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val postId: Long,
+    @Column(name = "post_id")
+    val id: Long,
     var title: String,
     var content: String,
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "post_tags", joinColumns = [JoinColumn(name = "post_id")])
-    var tags: MutableList<String>,
     @ManyToOne
     @JoinColumn(name = "user_id")
     val user: User
@@ -21,8 +25,7 @@ class Post(
 
     fun updatePost(postDto: PostDto) {
         this.title = postDto.title
-        this.content = postDto.description
-        this.tags = postDto.tags
+        this.content = postDto.content
     }
 
 }

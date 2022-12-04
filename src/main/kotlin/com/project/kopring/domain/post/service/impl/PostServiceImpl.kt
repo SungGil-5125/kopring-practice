@@ -1,9 +1,11 @@
 package com.project.kopring.domain.post.service.impl
 
+import com.project.kopring.domain.comment.domain.repository.CommentRepository
 import com.project.kopring.domain.post.domain.Post
 import com.project.kopring.domain.post.domain.repository.PostRepository
 import com.project.kopring.domain.post.exception.PostNotFoundException
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
+import com.project.kopring.domain.post.presentation.data.dto.PostKeywordDto
 import com.project.kopring.domain.post.presentation.data.dto.PostQueryDto
 import com.project.kopring.domain.post.presentation.data.type.PostValidatorType
 import com.project.kopring.domain.post.service.PostService
@@ -18,6 +20,7 @@ class PostServiceImpl(
         private val postRepository: PostRepository,
         private val postConverter: PostConverter,
         private val postValidator: PostValidator,
+        private val commentRepository: CommentRepository,
         private val userUtil: UserUtil
 ): PostService {
 
@@ -28,31 +31,39 @@ class PostServiceImpl(
     }
 
     @Transactional(rollbackFor = [Exception::class])
-    override fun deletePost(postDto: PostDto) {
-        postValidator.validate(PostValidatorType.UPDATE, postDto)
-                .let { postRepository.deleteById(it.postId) }
-    }
-
-    @Transactional(rollbackFor = [Exception::class])
     override fun updatePost(postDto: PostDto) {
         postValidator.validate(PostValidatorType.UPDATE, postDto)
             .updatePost(postDto)
     }
 
+    @Transactional(rollbackFor = [Exception::class])
+    override fun deletePost(postDto: PostDto) {
+        postValidator.validate(PostValidatorType.DELETE, postDto)
+            .let { postRepository.deleteById(it.id) }
+    }
+
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findPostDetailById(postDto: PostDto): PostQueryDto =
-            postRepository.findPostByPostId(postDto.id)
-                    .let { it ?: throw PostNotFoundException() }
-                    .let { postConverter.toQueryDto(it, isPostMine(it)) }
+            postRepository.findPostById(postDto.id)
+                .let { it ?: throw PostNotFoundException() }
+                .let { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)) }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findAllPost(): List<PostQueryDto> {
         return postRepository.findAll()
-            .map { postConverter.toQueryDto(it, isPostMine(it)) }
+            .map { it -> postConverter.toQueryDto(it,
+                commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)
+            ) }
     }
 
-    private fun isPostMine(post: Post): Boolean {
-        return post.user == userUtil.currentUser()
+    @Transactional(readOnly = true, rollbackFor = [Exception::class])
+    override fun findPostByKeyword(postKeywordDto: PostKeywordDto): List<PostQueryDto> {
+        return postRepository.findPostByTitleContaining(postKeywordDto.keyword)
+            .map { it -> postConverter.toQueryDto(it,
+                commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)
+            ) }
     }
+
+    private fun isPostMine(post: Post, email: String): Boolean = post.user.email == email
 
 }
