@@ -6,6 +6,7 @@ import com.project.kopring.domain.comment.service.CommentService
 import com.project.kopring.domain.comment.util.CommentConverter
 import com.project.kopring.domain.post.domain.repository.PostRepository
 import com.project.kopring.domain.post.exception.PostNotFoundException
+import com.project.kopring.domain.user.util.UserUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -13,14 +14,15 @@ import org.springframework.transaction.annotation.Transactional
 class CommentServiceImpl(
     private val commentRepository: CommentRepository,
     private val postRepository: PostRepository,
-    private val commentConverter: CommentConverter
+    private val commentConverter: CommentConverter,
+    private val userUtil: UserUtil
 ): CommentService {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun createComment(commentDto: CommentDto) {
         postRepository.findPostById(commentDto.postId)
             .let { it ?: throw PostNotFoundException () }
-            .let { commentConverter.toEntity(commentDto, it) }
+            .let { commentConverter.toEntity(commentDto, it, userUtil.currentUser()) }
             .let { commentRepository.save(it) }
     }
 

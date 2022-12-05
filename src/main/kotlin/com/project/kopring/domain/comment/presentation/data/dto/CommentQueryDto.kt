@@ -1,6 +1,6 @@
 package com.project.kopring.domain.comment.presentation.data.dto
 
-data class CommentDto(
-    val postId: Long,
+data class CommentQueryDto(
     val comment: String,
+    val name: String
 )
