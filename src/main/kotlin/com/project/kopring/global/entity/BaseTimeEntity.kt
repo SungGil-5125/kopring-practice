@@ -13,6 +13,6 @@ open class BaseTimeEntity {
 
     @CreatedDate
     @Column(nullable = false)
-    val createAt = LocalDateTime.now()
+    val createAt: LocalDateTime = LocalDateTime.now()
 
 }
