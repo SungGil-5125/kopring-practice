@@ -3,7 +3,6 @@ package com.project.kopring.domain.user.util.impl
 import com.project.kopring.domain.user.domain.User
 import com.project.kopring.domain.user.presentation.data.dto.ReissueTokenDto
 import com.project.kopring.domain.user.presentation.data.dto.UserDto
-import com.project.kopring.domain.user.presentation.data.request.ReissueTokenRequest
 import com.project.kopring.domain.user.presentation.data.request.SignInRequest
 import com.project.kopring.domain.user.presentation.data.request.SignUpRequest
 import com.project.kopring.domain.user.presentation.data.response.UserInfoResponse
@@ -21,8 +20,8 @@ class AccountConverterImpl: AccountConverter {
     override fun toDto(request: SignInRequest): UserDto =
             UserDto(request.email, request.password, "")
 
-    override fun toDto(request: ReissueTokenRequest): ReissueTokenDto =
-            ReissueTokenDto(request.refreshToken)
+    override fun toDto(refreshToken: String): ReissueTokenDto =
+            ReissueTokenDto(refreshToken)
 
     override fun toEntity(dto: UserDto, encodePassword: String): User =
             User(-1, dto.email, encodePassword, dto.name, "", Collections.singletonList(Role.ROLE_USER))

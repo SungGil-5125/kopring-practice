@@ -7,6 +7,7 @@ import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.presentation.data.dto.UserDto
 import com.project.kopring.domain.user.presentation.data.type.ValidatorType
 import com.project.kopring.domain.user.util.AccountValidator
+import org.apache.catalina.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 
@@ -17,7 +18,7 @@ class AccountValidatorImpl(
 ): AccountValidator{
 
     override fun validate(validatorType: ValidatorType, dto: UserDto) {
-        when(validatorType) {
+        when (validatorType) {
             ValidatorType.SIGNUP -> validatorSignUpEmail(dto.email)
             ValidatorType.SIGNIN -> validatorSignInInfo(dto.email, dto.password)
         }
@@ -35,7 +36,7 @@ class AccountValidatorImpl(
         }.let {
             passwordEncoder.matches(password, it.password)
         }.let {
-            if(it) return
+            if (it) return
             else throw PasswordNotCorrectException()
         }
     }
