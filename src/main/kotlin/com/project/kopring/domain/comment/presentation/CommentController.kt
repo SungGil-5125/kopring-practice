@@ -6,10 +6,7 @@ import com.project.kopring.domain.comment.util.CommentConverter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 
 @Controller
 @RequestMapping("comment")
@@ -21,7 +18,19 @@ class CommentController(
     @PostMapping("{postId}")
     fun writeComment(@PathVariable postId: Long, @RequestBody request: CommentRequest): ResponseEntity<Void> =
         commentConverter.toDto(postId, request)
-            .let { commentService.createComment(it) }
+            .let { commentService.writeComment(it) }
             .let { ResponseEntity.status(HttpStatus.CREATED).build() }
+
+    @PatchMapping("{commentId}")
+    fun updateComment(@PathVariable commentId: Long, @RequestBody request: CommentRequest): ResponseEntity<Void> =
+        commentConverter.toDto(commentId, request)
+            .let { commentService.updateComment(it) }
+            .let { ResponseEntity.status(HttpStatus.OK).build() }
+
+    @DeleteMapping("{commentId}")
+    fun updateComment(@PathVariable commentId: Long): ResponseEntity<Void> =
+        commentConverter.toDto(commentId)
+            .let { commentService.deleteComment(it) }
+            .let { ResponseEntity.status(HttpStatus.OK).build() }
 
 }

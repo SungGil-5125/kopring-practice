@@ -4,6 +4,8 @@ import com.project.kopring.domain.comment.presentation.data.dto.CommentDto
 
 interface CommentService {
 
-    fun createComment(commentDto: CommentDto)
+    fun writeComment(commentDto: CommentDto)
+    fun updateComment(commentDto: CommentDto)
+    fun deleteComment(commentDto: CommentDto)
 
 }

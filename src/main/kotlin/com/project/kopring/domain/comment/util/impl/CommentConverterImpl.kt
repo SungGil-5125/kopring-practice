@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component
 @Component
 class CommentConverterImpl: CommentConverter {
 
-    override fun toDto(postId: Long, request: CommentRequest): CommentDto =
-        CommentDto(postId, request.comment)
+    override fun toDto(id: Long, request: CommentRequest): CommentDto =
+        CommentDto(id, request.comment)
+
+    override fun toDto(id: Long): CommentDto =
+        CommentDto(id, "")
 
     override fun toEntity(dto: CommentDto, post: Post, user: User): Comment =
         Comment(-1, dto.comment, post, user)

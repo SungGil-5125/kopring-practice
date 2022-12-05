@@ -8,7 +8,8 @@ import com.project.kopring.domain.user.domain.User
 
 interface CommentConverter {
 
-    fun toDto(postId: Long, request: CommentRequest): CommentDto
+    fun toDto(id: Long, request: CommentRequest): CommentDto
+    fun toDto(id: Long): CommentDto
     fun toEntity(dto: CommentDto, post: Post, user: User): Comment
 
 }
