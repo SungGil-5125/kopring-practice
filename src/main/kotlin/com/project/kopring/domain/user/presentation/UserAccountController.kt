@@ -13,26 +13,26 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("auth")
 class UserAccountController(
-        private val userAccountService: UserAccountService,
-        private val accountConverter: AccountConverter
+    private val userAccountService: UserAccountService,
+    private val accountConverter: AccountConverter
 ) {
 
     @PostMapping("/signup")
     fun signUp(@RequestBody @Valid request: SignUpRequest): ResponseEntity<Void> =
         accountConverter.toDto(request)
-                .let { userAccountService.signUp(it) }
-                .let { ResponseEntity.status(HttpStatus.CREATED).build() }
+            .let { userAccountService.signUp(it) }
+            .let { ResponseEntity.status(HttpStatus.CREATED).build() }
 
     @PostMapping("/signin")
     fun signIn(@RequestBody @Valid request: SignInRequest): ResponseEntity<TokenResponse> =
         accountConverter.toDto(request)
-                .let { userAccountService.signIn(it) }
-                .let { ResponseEntity.ok(it) }
+            .let { userAccountService.signIn(it) }
+            .let { ResponseEntity.ok(it) }
 
     @PatchMapping("reissue")
     fun reissueToken(@RequestHeader("RefreshToken") refreshToken: String): ResponseEntity<TokenResponse> =
         accountConverter.toDto(refreshToken)
-                .let { userAccountService.reissueToken(it) }
-                .let { ResponseEntity.ok(it) }
+            .let { userAccountService.reissueToken(it) }
+            .let { ResponseEntity.ok(it) }
 
 }

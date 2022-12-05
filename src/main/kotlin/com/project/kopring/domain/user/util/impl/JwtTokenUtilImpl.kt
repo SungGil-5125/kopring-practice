@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class JwtTokenUtilImpl(
-        private val jwtTokenProvider: JwtTokenProvider,
-        private val userRepository: UserRepository
-): JwtTokenUtil {
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val userRepository: UserRepository
+) : JwtTokenUtil {
 
     override fun generateJwtToken(email: String): TokenResponse {
         val user = userRepository.findByEmail(email)

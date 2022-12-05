@@ -1,8 +1,8 @@
 package com.project.kopring.global.error.type
 
 enum class ErrorCode(
-        val message: String,
-        val status: Int
+    val message: String,
+    val status: Int
 ) {
 
     // USER
@@ -12,12 +12,16 @@ enum class ErrorCode(
 
 
     // TOKEN
+    REFRESH_TOKEN_EXPIRED("만료된 refreshToken 입니다.", 403),
     INVALID_TOKEN("유효하지 않은 token 입니다.", 403),
     EXPIRATION_TOKEN("만료된 token 입니다.", 403),
 
 
     // POST
     POST_NOT_FOUND("게시글을 찾을 수 없습니다.", 404),
+
+    // COMMENT
+    COMMENT_NOT_FOUND("댓글을 찾을 수 없습니다.", 404),
 
 
     // SERVER

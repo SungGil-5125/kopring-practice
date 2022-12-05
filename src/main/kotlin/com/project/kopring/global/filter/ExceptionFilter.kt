@@ -14,10 +14,14 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class ExceptionFilter(
-        private val objectMapper: ObjectMapper
-): OncePerRequestFilter() {
+    private val objectMapper: ObjectMapper
+) : OncePerRequestFilter() {
 
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         runCatching {
             filterChain.doFilter(request, response)
         }.onFailure { throwable ->
@@ -25,7 +29,7 @@ class ExceptionFilter(
                 is ExpiredJwtException -> setErrorResponse(ErrorCode.EXPIRATION_TOKEN, response)
                 is JwtException -> setErrorResponse(ErrorCode.INVALID_TOKEN, response)
                 is UserNotFoundException -> setErrorResponse(ErrorCode.USER_NOT_FOUND, response)
-//                else -> setErrorResponse(ErrorCode.INTERVAL_SERVER_ERROR, response)
+                else -> setErrorResponse(ErrorCode.INTERVAL_SERVER_ERROR, response)
             }
         }
     }

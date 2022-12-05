@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class AccountValidatorImpl(
-        private val userRepository: UserRepository,
-        private val passwordEncoder: PasswordEncoder
-): AccountValidator{
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder
+) : AccountValidator {
 
     override fun validate(validatorType: ValidatorType, dto: UserDto) {
         when (validatorType) {
@@ -25,7 +25,7 @@ class AccountValidatorImpl(
     }
 
     private fun validatorSignUpEmail(email: String) {
-        if(userRepository.existsByEmail(email)) {
+        if (userRepository.existsByEmail(email)) {
             throw DuplicateEmailException()
         }
     }

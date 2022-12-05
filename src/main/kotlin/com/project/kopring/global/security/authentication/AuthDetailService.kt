@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthDetailService(
-        private val userRepository: UserRepository
-): UserDetailsService {
+    private val userRepository: UserRepository
+) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails =
         AuthDetails(
-                userRepository.findByEmail(username) ?: throw UserNotFoundException()
+            userRepository.findByEmail(username) ?: throw UserNotFoundException()
         )
 }

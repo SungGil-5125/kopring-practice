@@ -6,5 +6,5 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConstructorBinding
 @ConfigurationProperties(value = "jwt.secret")
 class JwtProperties(
-        var key: String
+    var key: String
 )

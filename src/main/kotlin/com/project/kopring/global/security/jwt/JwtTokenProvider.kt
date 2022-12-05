@@ -13,8 +13,8 @@ import java.util.*
 
 @Component
 class JwtTokenProvider(
-        private val jwtProperties: JwtProperties
-){
+    private val jwtProperties: JwtProperties
+) {
     private val ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 3L // 3시간
     private val REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L // 1주
 
@@ -28,39 +28,41 @@ class JwtTokenProvider(
         return Keys.hmacShaKeyFor(bytes)
     }
 
-    fun extractAllClaims(token: String) : Claims {
+    fun extractAllClaims(token: String): Claims {
         return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey(jwtProperties.key))
-                .build()
-                .parseClaimsJws(token)
-                .body
+            .setSigningKey(getSignInKey(jwtProperties.key))
+            .build()
+            .parseClaimsJws(token)
+            .body
     }
 
     fun getUserEmail(token: String): String = extractAllClaims(token).subject
 
     fun isExpired(token: String): Boolean {
-        return try {
+        runCatching {
             extractAllClaims(token).expiration
-            false
-        } catch (e: ExpiredJwtException) {
-            true
+        }.onFailure {
+            return true
         }
+        return false
     }
 
     fun getExpireAt(): LocalDateTime = LocalDateTime.now().plusSeconds(ACCESS_TOKEN_EXPIRE_TIME / 1000)
 
     fun doGenerateToken(email: String, tokenType: TokenType, expiredTime: Long): String {
         return Jwts.builder()
-                .setSubject(email)
-                .claim("tokenType", tokenType.value)
-                .setIssuedAt(Date(System.currentTimeMillis()))
-                .setExpiration(Date(System.currentTimeMillis() + expiredTime))
-                .signWith(getSignInKey(jwtProperties.key))
-                .compact()
+            .setSubject(email)
+            .claim("tokenType", tokenType.value)
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + expiredTime))
+            .signWith(getSignInKey(jwtProperties.key))
+            .compact()
     }
 
-    fun generateAccessToken(email: String) : String = doGenerateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME)
+    fun generateAccessToken(email: String): String =
+        doGenerateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME)
 
-    fun generateRefreshToken(email: String) : String = doGenerateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME)
+    fun generateRefreshToken(email: String): String =
+        doGenerateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME)
 
 }

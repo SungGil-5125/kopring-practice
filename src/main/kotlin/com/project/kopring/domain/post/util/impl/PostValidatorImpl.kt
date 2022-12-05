@@ -10,19 +10,18 @@ import org.springframework.stereotype.Component
 
 @Component
 class PostValidatorImpl(
-        private val postRepository: PostRepository
-): PostValidator {
+    private val postRepository: PostRepository
+) : PostValidator {
 
-    override fun validate(validator: PostValidatorType, postDto: PostDto): Post {
-        return when(validator){
+    override fun validate(validator: PostValidatorType, postDto: PostDto): Post =
+        when (validator) {
             PostValidatorType.UPDATE -> validatePost(postDto.id)
             PostValidatorType.DELETE -> validatePost(postDto.id)
         }
-    }
 
-    private fun validatePost(id: Long): Post {
-        return postRepository.findPostById(id)
-                ?: throw PostNotFoundException()
-    }
+    private fun validatePost(id: Long): Post =
+        postRepository.findPostById(id)
+            ?: throw PostNotFoundException()
+
 
 }

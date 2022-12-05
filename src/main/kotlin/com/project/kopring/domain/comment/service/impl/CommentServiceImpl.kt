@@ -18,12 +18,12 @@ class CommentServiceImpl(
     private val commentValidator: CommentValidator,
     private val postRepository: PostRepository,
     private val userUtil: UserUtil,
-): CommentService {
+) : CommentService {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun writeComment(commentDto: CommentDto) {
         postRepository.findPostById(commentDto.id)
-            .let { it ?: throw PostNotFoundException () }
+            .let { it ?: throw PostNotFoundException() }
             .let { commentConverter.toEntity(commentDto, it, userUtil.currentUser()) }
             .let { commentRepository.save(it) }
     }

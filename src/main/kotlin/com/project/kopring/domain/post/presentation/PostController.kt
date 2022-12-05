@@ -2,6 +2,7 @@ package com.project.kopring.domain.post.presentation
 
 import com.project.kopring.domain.post.presentation.data.request.PostRequest
 import com.project.kopring.domain.post.presentation.data.request.UpdatePostRequest
+import com.project.kopring.domain.post.presentation.data.response.PostListResponse
 import com.project.kopring.domain.post.presentation.data.response.PostResponse
 import com.project.kopring.domain.post.service.PostService
 import com.project.kopring.domain.post.util.PostConverter
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("post")
 class PostController(
-        private val postService: PostService,
-        private val postConverter: PostConverter
+    private val postService: PostService,
+    private val postConverter: PostConverter
 ) {
 
     @PostMapping
@@ -43,9 +44,9 @@ class PostController(
             .let { ResponseEntity.ok(it) }
 
     @GetMapping
-    fun findAllPost(): ResponseEntity<List<PostResponse>> =
+    fun findAllPost(): ResponseEntity<PostListResponse> =
         postService.findAllPost()
-            .map { postConverter.toResponse(it) }
+            .let { postConverter.toListResponse(it) }
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("search")

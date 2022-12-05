@@ -1,5 +1,6 @@
 package com.project.kopring.domain.post.service.impl
 
+import com.project.kopring.domain.comment.domain.Comment
 import com.project.kopring.domain.comment.domain.repository.CommentRepository
 import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
 import com.project.kopring.domain.post.domain.Post
@@ -7,6 +8,7 @@ import com.project.kopring.domain.post.domain.repository.PostRepository
 import com.project.kopring.domain.post.exception.PostNotFoundException
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.post.presentation.data.dto.PostKeywordDto
+import com.project.kopring.domain.post.presentation.data.dto.PostListQueryDto
 import com.project.kopring.domain.post.presentation.data.dto.PostQueryDto
 import com.project.kopring.domain.post.presentation.data.type.PostValidatorType
 import com.project.kopring.domain.post.service.PostService
@@ -18,17 +20,17 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PostServiceImpl(
-        private val postRepository: PostRepository,
-        private val postConverter: PostConverter,
-        private val postValidator: PostValidator,
-        private val commentRepository: CommentRepository,
-        private val userUtil: UserUtil
-): PostService {
+    private val postRepository: PostRepository,
+    private val postConverter: PostConverter,
+    private val postValidator: PostValidator,
+    private val commentRepository: CommentRepository,
+    private val userUtil: UserUtil
+) : PostService {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun writePost(postDto: PostDto) {
         postConverter.toEntity(postDto, userUtil.currentUser())
-                .let { postRepository.save(it) }
+            .let { postRepository.save(it) }
     }
 
     @Transactional(rollbackFor = [Exception::class])
@@ -45,27 +47,30 @@ class PostServiceImpl(
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findPostDetailById(postDto: PostDto): PostQueryDto =
-            postRepository.findPostById(postDto.id)
-                .let { it ?: throw PostNotFoundException() }
-                .let { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
-                        .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)) }
+        postRepository.findPostById(postDto.id)
+            .let { it ?: throw PostNotFoundException() }
+            .let { postConverter.toQueryDto(it, findCommentByPostId(it.id), isPostMine(it)) }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findAllPost(): List<PostQueryDto> {
-        return postRepository.findAll()
-            .map { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
-                .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)
-            ) }
-    }
+    override fun findAllPost(): PostListQueryDto =
+        postRepository.findAll()
+            .map { postConverter.toQueryDto(it, findCommentByPostId(it.id), isPostMine(it)) }
+            .let { PostListQueryDto(it) }
+
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findPostByKeyword(postKeywordDto: PostKeywordDto): List<PostQueryDto> {
+    override fun findPostByKeyword(postKeywordDto: PostKeywordDto): PostListQueryDto {
         return postRepository.findPostByTitleContaining(postKeywordDto.keyword)
-            .map { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
-                    .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)
-            ) }
+            .map { postConverter.toQueryDto(it, findCommentByPostId(it.id), isPostMine(it)) }
+            .let { PostListQueryDto(it) }
     }
+
+    private fun findCommentByPostId(postId: Long) =
+        commentRepository.findCommentByPostId(postId)
+            .map { CommentQueryDto(it.id, isCommentMine(it), it.comment, it.user.name) }.toMutableList()
 
     private fun isPostMine(post: Post): Boolean = post.user.email == userUtil.currentUser().email
+
+    private fun isCommentMine(comment: Comment) = comment.user.email == userUtil.currentUser().email
 
 }

@@ -8,5 +8,5 @@ data class PostQueryDto(
     val title: String,
     val content: String,
     val tags: MutableList<String>,
-    val comment: MutableList<CommentQueryDto>
+    val comments: MutableList<CommentQueryDto>
 )

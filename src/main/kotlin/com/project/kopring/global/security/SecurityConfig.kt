@@ -16,29 +16,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-        private val jwtRequestFilter: JwtRequestFilter,
-        private val exceptionFilter: ExceptionFilter
+    private val jwtRequestFilter: JwtRequestFilter,
+    private val exceptionFilter: ExceptionFilter
 ) {
 
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-                .cors()
-                .and()
-                .csrf().disable()
-                .httpBasic().disable()
+            .cors()
+            .and()
+            .csrf().disable()
+            .httpBasic().disable()
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/auth/**").permitAll()
-                .anyRequest().permitAll()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+            .antMatchers(HttpMethod.PATCH, "/auth/**").permitAll()
+            .anyRequest().permitAll()
 
         http
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
-                .addFilterBefore(exceptionFilter, JwtRequestFilter::class.java)
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(exceptionFilter, JwtRequestFilter::class.java)
 
         return http.build()
     }

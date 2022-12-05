@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class CommentValidatorImpl(
     private val commentRepository: CommentRepository
-): CommentValidator {
+) : CommentValidator {
 
     override fun validate(commentDto: CommentDto): Comment =
         commentRepository.findCommentById(commentDto.id)

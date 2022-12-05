@@ -9,7 +9,7 @@ import com.project.kopring.domain.user.domain.User
 import org.springframework.stereotype.Component
 
 @Component
-class CommentConverterImpl: CommentConverter {
+class CommentConverterImpl : CommentConverter {
 
     override fun toDto(id: Long, request: CommentRequest): CommentDto =
         CommentDto(id, request.comment)

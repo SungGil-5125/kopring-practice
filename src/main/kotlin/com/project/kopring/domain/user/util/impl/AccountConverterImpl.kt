@@ -12,21 +12,21 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class AccountConverterImpl: AccountConverter {
+class AccountConverterImpl : AccountConverter {
 
     override fun toDto(request: SignUpRequest) =
-            UserDto(request.email, request.password, request.name)
+        UserDto(request.email, request.password, request.name)
 
     override fun toDto(request: SignInRequest): UserDto =
-            UserDto(request.email, request.password, "")
+        UserDto(request.email, request.password, "")
 
     override fun toDto(refreshToken: String): ReissueTokenDto =
-            ReissueTokenDto(refreshToken)
+        ReissueTokenDto(refreshToken)
 
     override fun toEntity(dto: UserDto, encodePassword: String): User =
-            User(-1, dto.email, encodePassword, dto.name, "", Collections.singletonList(Role.ROLE_USER))
+        User(-1, dto.email, encodePassword, dto.name, "", Collections.singletonList(Role.ROLE_USER))
 
     override fun toResponse(dto: UserDto): UserInfoResponse =
-            UserInfoResponse(dto.email, dto.password, dto.name)
+        UserInfoResponse(dto.email, dto.password, dto.name)
 
 }

@@ -1,6 +1,6 @@
 package com.project.kopring.global.error.response
 
-class ErrorResponse(
-        var status: Int,
-        var message: String
+data class ErrorResponse(
+    var status: Int,
+    var message: String
 )

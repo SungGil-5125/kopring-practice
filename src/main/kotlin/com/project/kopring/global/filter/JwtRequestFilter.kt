@@ -13,14 +13,18 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class JwtRequestFilter(
-        private val jwtTokenProvider: JwtTokenProvider,
-        private val authDetailService: AuthDetailService
-): OncePerRequestFilter() {
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val authDetailService: AuthDetailService
+) : OncePerRequestFilter() {
 
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         val accessToken = request.getHeader("Authorization")
 
-        if(accessToken != null) {
+        if (accessToken != null) {
             val email = jwtTokenProvider.getUserEmail(accessToken)
             registerUserInfoSecurityContext(email)
         }
