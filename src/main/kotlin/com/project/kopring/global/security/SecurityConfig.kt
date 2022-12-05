@@ -33,6 +33,7 @@ class SecurityConfig(
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/auth/**").permitAll()
                 .anyRequest().permitAll()
 
         http

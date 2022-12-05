@@ -6,8 +6,8 @@ import com.project.kopring.domain.user.presentation.data.response.TokenResponse
 
 interface UserAccountService {
 
-    fun signIn(userDto: UserDto): TokenResponse
     fun signUp(userDto: UserDto)
+    fun signIn(userDto: UserDto): TokenResponse
     fun reissueToken(reissueTokenDto: ReissueTokenDto): TokenResponse
 
 }

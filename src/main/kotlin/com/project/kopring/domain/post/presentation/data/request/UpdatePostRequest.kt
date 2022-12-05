@@ -6,5 +6,7 @@ class UpdatePostRequest(
         @field:NotBlank
         val title: String,
         @field:NotBlank
-        val content: String
+        val content: String,
+        @field:NotBlank
+        val tags: MutableList<String>
 )

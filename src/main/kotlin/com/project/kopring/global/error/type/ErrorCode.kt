@@ -12,9 +12,8 @@ enum class ErrorCode(
 
 
     // TOKEN
-    REFRESH_TOKEN_EXPIRED("만료된 refreshToken 입니다.", 403),
-    INVALID_TOKEN("유효하지 않은 accessToken 입니다.", 403),
-    EXPIRATION_TOKEN("만료된 accessToken 입니다.", 403),
+    INVALID_TOKEN("유효하지 않은 token 입니다.", 403),
+    EXPIRATION_TOKEN("만료된 token 입니다.", 403),
 
 
     // POST

@@ -1,6 +1,5 @@
 package com.project.kopring.domain.user.presentation
 
-import com.project.kopring.domain.user.presentation.data.request.ReissueTokenRequest
 import com.project.kopring.domain.user.presentation.data.request.SignInRequest
 import com.project.kopring.domain.user.presentation.data.request.SignUpRequest
 import com.project.kopring.domain.user.presentation.data.response.TokenResponse
@@ -31,10 +30,9 @@ class UserAccountController(
                 .let { ResponseEntity.ok(it) }
 
     @PatchMapping("reissue")
-    fun reissueToken(@RequestBody @Valid request: ReissueTokenRequest): ResponseEntity<TokenResponse> =
-        accountConverter.toDto(request)
+    fun reissueToken(@RequestHeader("RefreshToken") refreshToken: String): ResponseEntity<TokenResponse> =
+        accountConverter.toDto(refreshToken)
                 .let { userAccountService.reissueToken(it) }
                 .let { ResponseEntity.ok(it) }
-
 
 }
