@@ -1,9 +1,12 @@
 package com.project.kopring.domain.post.presentation.data.response
 
+import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
+
 data class PostResponse(
         val postId: Long,
         val isMine: Boolean,
         val title: String,
         val content: String,
-        val comment: MutableList<String>
+        val tags: MutableList<String>,
+        val comment: MutableList<CommentQueryDto>
 )

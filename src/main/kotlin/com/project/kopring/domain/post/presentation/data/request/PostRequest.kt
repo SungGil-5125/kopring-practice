@@ -7,4 +7,6 @@ data class PostRequest(
         val title: String,
         @field:NotBlank
         val content: String,
+        @field:NotBlank
+        val tags: MutableList<String>
 )

@@ -1,6 +1,7 @@
 package com.project.kopring.domain.post.service.impl
 
 import com.project.kopring.domain.comment.domain.repository.CommentRepository
+import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
 import com.project.kopring.domain.post.domain.Post
 import com.project.kopring.domain.post.domain.repository.PostRepository
 import com.project.kopring.domain.post.exception.PostNotFoundException
@@ -46,24 +47,25 @@ class PostServiceImpl(
     override fun findPostDetailById(postDto: PostDto): PostQueryDto =
             postRepository.findPostById(postDto.id)
                 .let { it ?: throw PostNotFoundException() }
-                .let { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)) }
+                .let { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
+                        .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)) }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findAllPost(): List<PostQueryDto> {
         return postRepository.findAll()
-            .map { it -> postConverter.toQueryDto(it,
-                commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)
+            .map { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
+                .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)
             ) }
     }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
     override fun findPostByKeyword(postKeywordDto: PostKeywordDto): List<PostQueryDto> {
         return postRepository.findPostByTitleContaining(postKeywordDto.keyword)
-            .map { it -> postConverter.toQueryDto(it,
-                commentRepository.findCommentByPostId(it.id).map { it.comment }.toMutableList(), isPostMine(it, userUtil.currentUser().email)
+            .map { it -> postConverter.toQueryDto(it, commentRepository.findCommentByPostId(it.id)
+                    .map { CommentQueryDto(it.comment, it.user.name) }.toMutableList(), isPostMine(it)
             ) }
     }
 
-    private fun isPostMine(post: Post, email: String): Boolean = post.user.email == email
+    private fun isPostMine(post: Post): Boolean = post.user.email == userUtil.currentUser().email
 
 }

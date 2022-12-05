@@ -1,5 +1,6 @@
 package com.project.kopring.domain.post.util
 
+import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
 import com.project.kopring.domain.post.domain.Post
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.post.presentation.data.dto.PostKeywordDto
@@ -16,7 +17,7 @@ interface PostConverter {
     fun toDto(id: Long): PostDto
     fun toDto(keyword: String): PostKeywordDto
     fun toEntity(dto: PostDto, user: User): Post
-    fun toQueryDto(post: Post, comment: MutableList<String>, isMine: Boolean): PostQueryDto
+    fun toQueryDto(post: Post, comment: MutableList<CommentQueryDto>, isMine: Boolean): PostQueryDto
     fun toResponse(dto: PostQueryDto): PostResponse
 
 }
