@@ -14,7 +14,7 @@ import com.project.kopring.domain.post.utils.PostConverter
 import com.project.kopring.domain.user.domain.User
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
-import java.util.Collections
+import java.util.*
 
 @Component
 class PostConverterImpl : PostConverter {
