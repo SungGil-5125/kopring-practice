@@ -2,7 +2,7 @@ package com.project.kopring.domain.comment.presentation
 
 import com.project.kopring.domain.comment.presentation.data.request.CommentRequest
 import com.project.kopring.domain.comment.service.CommentService
-import com.project.kopring.domain.comment.util.CommentConverter
+import com.project.kopring.domain.comment.utils.CommentConverter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

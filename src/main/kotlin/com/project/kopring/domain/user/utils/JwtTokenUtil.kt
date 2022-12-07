@@ -1,4 +1,4 @@
-package com.project.kopring.domain.user.util
+package com.project.kopring.domain.user.utils
 
 import com.project.kopring.domain.user.presentation.data.response.TokenResponse
 

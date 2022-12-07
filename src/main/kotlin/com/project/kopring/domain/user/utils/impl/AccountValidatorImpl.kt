@@ -1,4 +1,4 @@
-package com.project.kopring.domain.user.util.impl
+package com.project.kopring.domain.user.utils.impl
 
 import com.project.kopring.domain.user.domain.repository.UserRepository
 import com.project.kopring.domain.user.exception.DuplicateEmailException
@@ -6,8 +6,7 @@ import com.project.kopring.domain.user.exception.PasswordNotCorrectException
 import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.presentation.data.dto.UserDto
 import com.project.kopring.domain.user.presentation.data.type.ValidatorType
-import com.project.kopring.domain.user.util.AccountValidator
-import org.apache.catalina.User
+import com.project.kopring.domain.user.utils.AccountValidator
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 

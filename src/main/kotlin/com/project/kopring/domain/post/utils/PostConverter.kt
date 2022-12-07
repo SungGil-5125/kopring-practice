@@ -1,4 +1,4 @@
-package com.project.kopring.domain.post.util
+package com.project.kopring.domain.post.utils
 
 import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
 import com.project.kopring.domain.post.domain.Post
@@ -11,14 +11,15 @@ import com.project.kopring.domain.post.presentation.data.request.UpdatePostReque
 import com.project.kopring.domain.post.presentation.data.response.PostListResponse
 import com.project.kopring.domain.post.presentation.data.response.PostResponse
 import com.project.kopring.domain.user.domain.User
+import org.springframework.web.multipart.MultipartFile
 
 interface PostConverter {
 
-    fun toDto(request: PostRequest): PostDto
-    fun toDto(id: Long, request: UpdatePostRequest): PostDto
+    fun toDto(request: PostRequest, file: MultipartFile): PostDto
+    fun toDto(id: Long, request: UpdatePostRequest, file: MultipartFile): PostDto
     fun toDto(id: Long): PostDto
     fun toDto(keyword: String): PostKeywordDto
-    fun toEntity(dto: PostDto, user: User): Post
+    fun toEntity(dto: PostDto, user: User, uploadFile: String): Post
     fun toQueryDto(post: Post, comment: MutableList<CommentQueryDto>, isMine: Boolean): PostQueryDto
     fun toResponse(dto: PostQueryDto): PostResponse
     fun toListResponse(dto: PostListQueryDto): PostListResponse

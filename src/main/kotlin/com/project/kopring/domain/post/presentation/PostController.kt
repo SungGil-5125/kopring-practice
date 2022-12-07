@@ -5,10 +5,11 @@ import com.project.kopring.domain.post.presentation.data.request.UpdatePostReque
 import com.project.kopring.domain.post.presentation.data.response.PostListResponse
 import com.project.kopring.domain.post.presentation.data.response.PostResponse
 import com.project.kopring.domain.post.service.PostService
-import com.project.kopring.domain.post.util.PostConverter
+import com.project.kopring.domain.post.utils.PostConverter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("post")
@@ -18,8 +19,8 @@ class PostController(
 ) {
 
     @PostMapping
-    fun writePost(@RequestBody request: PostRequest): ResponseEntity<Void> =
-        postConverter.toDto(request)
+    fun writePost(@RequestPart request: PostRequest, @RequestPart file: MultipartFile): ResponseEntity<Void> =
+        postConverter.toDto(request, file)
             .let { postService.writePost(it) }
             .let { ResponseEntity.status(HttpStatus.CREATED).build() }
 
@@ -31,8 +32,12 @@ class PostController(
             .let { ResponseEntity.ok().build() }
 
     @PatchMapping("{id}")
-    fun updatePost(@PathVariable id: Long, @RequestBody updatePostRequest: UpdatePostRequest): ResponseEntity<Void> =
-        postConverter.toDto(id, updatePostRequest)
+    fun updatePost(
+        @PathVariable id: Long,
+        @RequestPart request: UpdatePostRequest,
+        @RequestPart(required = false) file: MultipartFile
+    ): ResponseEntity<Void> =
+        postConverter.toDto(id, request, file)
             .let { postService.updatePost(it) }
             .let { ResponseEntity.ok().build() }
 
