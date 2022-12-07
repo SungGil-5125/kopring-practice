@@ -8,5 +8,6 @@ data class PostResponse(
         val title: String,
         val content: String,
         val tags: MutableList<String>,
+        val imageUrl: String,
         val comments: MutableList<CommentQueryDto>
 )

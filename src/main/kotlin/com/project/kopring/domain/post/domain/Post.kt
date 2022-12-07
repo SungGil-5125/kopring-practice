@@ -15,15 +15,15 @@ class Post(
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "post_tags", joinColumns = [JoinColumn(name = "post_id")])
     var tags: MutableList<String>,
+    var imageUrl: String,
     @ManyToOne
     @JoinColumn(name = "user_id")
     val user: User
-): BaseTimeEntity() {
-
-    fun updatePost(postDto: PostDto) {
+) : BaseTimeEntity() {
+    fun updatePost(postDto: PostDto, imageUrl: String) {
         this.title = postDto.title
         this.content = postDto.content
         this.tags = postDto.tags
+        this.imageUrl = "https://devlog-v2-bucket.s3.ap-northeast-2.amazonaws.com/POST/".plus(imageUrl)
     }
-
 }
