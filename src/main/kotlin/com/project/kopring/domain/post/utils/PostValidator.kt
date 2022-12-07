@@ -1,4 +1,4 @@
-package com.project.kopring.domain.post.util
+package com.project.kopring.domain.post.utils
 
 import com.project.kopring.domain.post.domain.Post
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
