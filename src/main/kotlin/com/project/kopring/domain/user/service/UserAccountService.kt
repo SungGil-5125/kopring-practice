@@ -8,5 +8,4 @@ interface UserAccountService {
     fun findUserById(userDto: UserDto): UserQueryDto
     fun updateUserInfo(userDto: UserDto)
 
-
 }
