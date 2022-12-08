@@ -37,8 +37,8 @@ dependencies {
 
 	// test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
-	testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+	testImplementation("org.mockito:mockito-inline:4.8.0")
 
 	// kotlin
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
