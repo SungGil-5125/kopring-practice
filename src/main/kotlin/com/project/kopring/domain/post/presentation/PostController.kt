@@ -42,9 +42,9 @@ class PostController(
             .let { ResponseEntity.ok().build() }
 
     @GetMapping("{id}")
-    fun findOneById(@PathVariable id: Long): ResponseEntity<PostResponse> =
+    fun findPostById(@PathVariable id: Long): ResponseEntity<PostResponse> =
         postConverter.toDto(id)
-            .let { postService.findPostDetailById(it) }
+            .let { postService.findPostById(it) }
             .let { postConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
 
@@ -55,9 +55,10 @@ class PostController(
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("search")
-    fun findPostByKeyword(@RequestParam("keyword") keyword: String) =
+    fun findPostByKeyword(@RequestParam("keyword") keyword: String): ResponseEntity<PostListResponse> =
         postConverter.toDto(keyword)
             .let { postService.findPostByKeyword(it) }
+            .let { postConverter.toListResponse(it) }
             .let { ResponseEntity.ok(it) }
 
 }

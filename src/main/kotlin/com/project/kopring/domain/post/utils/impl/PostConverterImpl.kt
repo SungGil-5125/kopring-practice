@@ -35,10 +35,10 @@ class PostConverterImpl : PostConverter {
         Post(-1, dto.title, dto.content, dto.tags, "https://devlog-v2-bucket.s3.ap-northeast-2.amazonaws.com/POST/".plus(uploadFile), user)
 
     override fun toQueryDto(post: Post, comment: MutableList<CommentQueryDto>, isMine: Boolean): PostQueryDto =
-        PostQueryDto(post.id, isMine, post.title, post.content, post.tags, post.imageUrl, comment)
+        PostQueryDto(post.id, post.user.userId, isMine, post.title, post.content, post.tags, post.imageUrl, comment)
 
     override fun toResponse(dto: PostQueryDto): PostResponse =
-        PostResponse(dto.id, dto.isMine, dto.title, dto.content, dto.tags, dto.imageUrl, dto.comments)
+        PostResponse(dto.postId, dto.userId, dto.isMine, dto.title, dto.content, dto.tags, dto.imageUrl, dto.comments)
 
     override fun toListResponse(dto: PostListQueryDto): PostListResponse =
         PostListResponse(dto.list)
