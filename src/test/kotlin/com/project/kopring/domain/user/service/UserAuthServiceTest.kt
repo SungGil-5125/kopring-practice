@@ -6,6 +6,7 @@ import com.project.kopring.domain.user.exception.PasswordNotCorrectException
 import com.project.kopring.domain.user.exception.UserNotFoundException
 import com.project.kopring.domain.user.presentation.data.dto.ReissueTokenDto
 import com.project.kopring.domain.user.presentation.data.dto.UserDto
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -31,6 +32,10 @@ class UserAuthServiceTest(
 
     private val name = "test name"
 
+    @AfterEach
+    fun init() {
+        userRepository.deleteAll();
+    }
 
     @Test
     fun `회원가입 테스트`() {
