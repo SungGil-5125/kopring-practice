@@ -10,7 +10,7 @@ interface PostService {
     fun writePost(postDto: PostDto)
     fun updatePost(postDto: PostDto)
     fun deletePost(postDto: PostDto)
-    fun findPostDetailById(postDto: PostDto): PostQueryDto
+    fun findPostById(postDto: PostDto): PostQueryDto
     fun findAllPost(): PostListQueryDto
     fun findPostByKeyword(postKeywordDto: PostKeywordDto): PostListQueryDto
 

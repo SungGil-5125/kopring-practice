@@ -4,6 +4,7 @@ import com.project.kopring.domain.comment.presentation.data.dto.CommentQueryDto
 
 data class PostResponse(
         val postId: Long,
+        val userId: Long,
         val isMine: Boolean,
         val title: String,
         val content: String,

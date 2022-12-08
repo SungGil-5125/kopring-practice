@@ -57,7 +57,7 @@ class PostServiceImpl(
     }
 
     @Transactional(readOnly = true, rollbackFor = [Exception::class])
-    override fun findPostDetailById(postDto: PostDto): PostQueryDto =
+    override fun findPostById(postDto: PostDto): PostQueryDto =
         postRepository.findPostById(postDto.id)
             .let { it ?: throw PostNotFoundException() }
             .let { postConverter.toQueryDto(it, findCommentByPostId(it.id), isPostMine(it)) }
