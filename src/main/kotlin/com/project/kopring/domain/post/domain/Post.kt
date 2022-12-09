@@ -3,6 +3,8 @@ package com.project.kopring.domain.post.domain
 import com.project.kopring.domain.post.presentation.data.dto.PostDto
 import com.project.kopring.domain.user.domain.User
 import com.project.kopring.global.entity.BaseTimeEntity
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
@@ -17,6 +19,7 @@ class Post(
     var tags: MutableList<String>,
     var imageUrl: String,
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     val user: User
 ) : BaseTimeEntity() {
