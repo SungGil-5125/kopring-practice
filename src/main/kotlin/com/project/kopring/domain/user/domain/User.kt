@@ -15,7 +15,7 @@ class User(
     var imageUrl: String,
     @Enumerated(EnumType.STRING)
     @ElementCollection
-    @CollectionTable(name = "role", joinColumns = [JoinColumn(name = "userId")])
+    @CollectionTable(name = "role", joinColumns = [JoinColumn(name = "user_id")])
     val roles: MutableList<Role>
 ) {
     fun updateRefreshToken(refreshToken: String) {
