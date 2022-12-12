@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockMultipartFile
+import org.springframework.mock.web.MockPart
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.test.web.servlet.MockMvc
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multi
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.io.File
 import java.io.FileInputStream
+import java.nio.charset.Charset
 import java.util.*
 
 @SpringBootTest
@@ -40,7 +42,7 @@ class PostControllerTest(
     private val userRepository: UserRepository
 ) {
 
-    private val email = "test5/@test.com"
+    private val email = "test1@test.com"
 
     private val password = "test password"
 
@@ -96,18 +98,13 @@ class PostControllerTest(
 
         val request = objectMapper.writeValueAsString(postRequest)
 
-        val json = MockMultipartFile("request", "jsondata", "application/json", request.toByteArray())
-
         // when & then
         mockMvc.perform(multipart("/post")
             .file(file)
-            .file(json)
+            .part(MockPart("request", request.toByteArray(Charset.forName("UTF-8"))))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-
             .header("Authorization", getAccessToken())
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
             .characterEncoding("UTF-8"))
 
             .andExpect(status().isCreated)
